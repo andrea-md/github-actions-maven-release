@@ -9,7 +9,18 @@ inputs:
   release-branch-name:
     description: 'Filter the branch to execute the release on'
     required: false
-  maven-local-repo-path: 
+
+  gpg-enabled:
+    description: 'Enable gpg signing'
+    default: false
+  gpg-key-id:
+    description: 'The GPG key ID'
+    required: false
+  gpg-key:
+    description: 'The GPG key'
+    required: false
+
+  maven-local-repo-path:
     description: 'The maven local repository path'
     required: false
     default: '$M2_HOME/repository'
@@ -54,6 +65,10 @@ runs:
     - release.sh
   env:
     RELEASE_BRANCH_NAME: ${{ inputs.release-branch-name }}
+
+    GPG_ENABLED: ${{ inputs.gpg-enabled }}
+    GPG_KEY_ID: ${{ inputs.gpg-key-id }}
+    GPG_KEY: ${{ inputs.gpg-key }}
 
     MAVEN_LOCAL_REPO_PATH: ${{ inputs.maven-local-repo-path }}
     MAVEN_REPO_SERVER_ID: ${{ inputs.maven-repo-server-id }}
