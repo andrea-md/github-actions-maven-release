@@ -6,7 +6,7 @@
         <server>
             <id>github.com</id>
             <username>${GITHUB_ACTOR}</username>
-            <password>${GITHUB_TOKEN}</password>
+            <password>${GITHUB_TOKE}</password>
         </server>
     </servers>
 </settings>
