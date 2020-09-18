@@ -24,13 +24,14 @@ inputs:
     description: 'Maven server repository private key passphrase'
     required: true
     default: ''
-  maven-release-args:
-    description: 'The maven arguments for the release step'
+  maven-release-version:
+    description: 'Version to release'
     required: true
     default: ''
-  maven-build-release-args:
-    description: 'The maven arguments for the build release step'
+  maven-release-version-increment:
+    description: 'Increment version to release'
     required: true
+    default: '0'
   maven-project-folder:
     description: 'You may have more than one maven projects inside the repo. This option allows you to specify the folder for which you want to trigger the release'
     required: false
@@ -63,8 +64,8 @@ runs:
     MAVEN_REPO_PRIVATE_KEY: ${{ inputs.maven-repo-server-private-key}}
     MAVEN_REPO_PRIVATE_KEY_PASSPHRASE: ${{ inputs.maven-repo-server-private-key-passphrase }}
     MAVEN_PROJECT_FOLDER: ${{ inputs.maven-project-folder }}
-    MAVEN_RELEASE_ARGS: ${{ inputs.maven-release-args }}
-    $MAVEN_BUILD_RELEASE_ARGS: ${{ inputs.maven-release-build-args }}
+    MAVEN_RELEASE_VERSION: ${{ inputs.maven-release-version }}
+    $MAVEN_INCREMENT_VERSION:  ${{ inputs.maven-release-version-increment}}
 
     SKIP_PERFORM: ${{ inputs.skip-perform }}
 
