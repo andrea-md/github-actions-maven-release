@@ -61,10 +61,10 @@ cd $MAVEN_PROJECT_FOLDER
 
 # Create the release and set the version:
 echo "Do mvn release:branch version: $MAVEN_RELEASE_VERSION"
-mvn -B $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL release:branch -DbranchName=v$MAVEN_RELEASE_VERSION.x -DautoVersionSubmodules=true -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false -DreleaseVersion=$MAVEN_RELEASE_VERSION.0-SNAPSHOT
+mvn -B $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL release:branch -DbranchName=v$MAVEN_RELEASE_VERSION.x -DautoVersionSubmodules=true -DupdateBranchVersions=true -DupdateWorkingCopyVersions=false -DreleaseVersion=$MAVEN_RELEASE_VERSION.0-SNAPSHOT  -Dsonatype2.repo.username=$MAVEN_USERNAME -Dsonatype2.repo.password=$MAVEN_PASSWORD
 
 if [[ ("$?" -eq 0) && ($SKIP_PERFORM == "false") ]]; then
 # Build release
 echo "Do mvn release:branch with arguments $MAVEN_BUILD_RELEASE_ARGS"
-mvn -B $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL build-helper:parse-version clean release:clean release:prepare release:perform -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -DautoVersionSubmodules=true -DreleaseVersion=$MAVEN_RELEASE_VERSION.$MAVEN_INCREMENT_VERSION -DdevelopmentVersion=$MAVEN_RELEASE_VERSION.$MAVEN_INCREMENT_VERSION-SNAPSHOT -DtagNameFormat=v@{project.version}
+mvn -B $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL build-helper:parse-version clean release:clean release:prepare release:perform -Darguments="-Dmaven.javadoc.skip=true -Dmaven.test.skip=true" -DautoVersionSubmodules=true -DreleaseVersion=$MAVEN_RELEASE_VERSION.$MAVEN_INCREMENT_VERSION -DdevelopmentVersion=$MAVEN_RELEASE_VERSION.$MAVEN_INCREMENT_VERSION-SNAPSHOT -DtagNameFormat=v@{project.version}  -Dsonatype2.repo.username=$MAVEN_USERNAME -Dsonatype2.repo.password=$MAVEN_PASSWORD
 fi

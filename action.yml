@@ -83,5 +83,7 @@ runs:
 
     GIT_RELEASE_BOT_NAME: ${{ inputs.git-release-bot-name }}
     GIT_RELEASE_BOT_EMAIL: ${{ inputs.git-release-bot-email }}
+    MAVEN_USERNAME: ${{ inputs.amana-user }}
+    MAVEN_PASSWORRD: ${{ inputs.amana-password }}
 
 

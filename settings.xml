@@ -9,5 +9,10 @@
             <privateKey>${PRIVATE_KEY_LOCATION}</privateKey>
             <passphrase>${PRIVATE_KEY_PASSPHRASE}</passphrase>
         </server>
+        <server>
+            <id>amana</id>
+            <username>${MAVEN_USERNAME}</username>
+            <password>${MAVEN_PASSWORD}</password>
+        </server>
     </servers>
 </settings>
