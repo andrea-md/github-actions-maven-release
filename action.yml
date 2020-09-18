@@ -41,20 +41,20 @@ inputs:
     required: false
     default: './'
   git-release-bot-name:
-    description: 'The git user name for commiting the release'
+    description: 'The git user name for committing the release'
     required: true
   git-release-bot-email:
-    description: 'The git user email for commiting the release'
+    description: 'The git user email for committing the release'
     required: true
   skip-perform:
     description: 'Skip maven release perform'
     required: false
     default: false
 
-  maven-release-actor:
+  private-key:
     description: 'Owner of github access token.'
     required: true
-  maven-repo-release-token:
+  private-key-passpharse:
     description: 'Github access token. https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line'
     required: true
 
@@ -72,8 +72,8 @@ runs:
 
     MAVEN_LOCAL_REPO_PATH: ${{ inputs.maven-local-repo-path }}
     MAVEN_REPO_SERVER_ID: ${{ inputs.maven-repo-server-id }}
-    GITHUB_ACTOR: ${{ inputs.maven-repo-release-actor}}
-    GITHUB_TOKEN: ${{ inputs.maven-repo-release-token }}
+    PRIVATE_KEY_LOCATION: ${{ inputs.private-key}}
+    PRIVATE_KEY_PASSPHRASE: ${{ inputs.private-key-passphrase }}
     MAVEN_PROJECT_FOLDER: ${{ inputs.maven-project-folder }}
     MAVEN_RELEASE_VERSION: ${{ inputs.maven-release-version }}
     MAVEN_INCREMENT_VERSION:  ${{ inputs.maven-release-version-increment}}
