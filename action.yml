@@ -17,13 +17,6 @@ inputs:
     description: 'Maven server repository id to push the artifacts to'
     required: true
     default: 'github.com'
-  maven-repo-server-private-key:
-    description: 'Maven server repository private key with write rights'
-    required: true
-  maven-repo-server-private-key-passphrase:
-    description: 'Maven server repository private key passphrase'
-    required: true
-    default: ''
   maven-release-version:
     description: 'Version to release'
     required: true
@@ -47,7 +40,10 @@ inputs:
     required: false
     default: false
 
-  access-token:
+  maven-release-actor:
+    description: 'Owner of github access token.'
+    required: true
+  maven-repo-release-token:
     description: 'Github access token. https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line'
     required: true
 
@@ -61,16 +57,15 @@ runs:
 
     MAVEN_LOCAL_REPO_PATH: ${{ inputs.maven-local-repo-path }}
     MAVEN_REPO_SERVER_ID: ${{ inputs.maven-repo-server-id }}
-    MAVEN_REPO_PRIVATE_KEY: ${{ inputs.maven-repo-server-private-key}}
-    MAVEN_REPO_PRIVATE_KEY_PASSPHRASE: ${{ inputs.maven-repo-server-private-key-passphrase }}
+    GITHUB_ACTOR: ${{ inputs.maven-repo-release-actor}}
+    GITHUB_TOKEN: ${{ inputs.maven-repo-release-token }}
     MAVEN_PROJECT_FOLDER: ${{ inputs.maven-project-folder }}
     MAVEN_RELEASE_VERSION: ${{ inputs.maven-release-version }}
-    $MAVEN_INCREMENT_VERSION:  ${{ inputs.maven-release-version-increment}}
+    MAVEN_INCREMENT_VERSION:  ${{ inputs.maven-release-version-increment}}
 
     SKIP_PERFORM: ${{ inputs.skip-perform }}
 
     GIT_RELEASE_BOT_NAME: ${{ inputs.git-release-bot-name }}
     GIT_RELEASE_BOT_EMAIL: ${{ inputs.git-release-bot-email }}
 
-    GITHUB_ACCESS_TOKEN: ${{ inputs.access-token }}
 
