@@ -57,6 +57,7 @@ inputs:
   private-key-passpharse:
     description: 'Github access token. https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line'
     required: true
+    default: ""
 
 runs:
   using: 'docker'
