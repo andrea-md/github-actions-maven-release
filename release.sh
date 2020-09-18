@@ -30,21 +30,6 @@ git config --global user.name "$GIT_RELEASE_BOT_NAME";
 echo "Setup git user email to '$GIT_RELEASE_BOT_EMAIL'"
 git config --global user.email "$GIT_RELEASE_BOT_EMAIL";
 
-# Setup GPG
-echo "GPG_ENABLED '$GPG_ENABLED'"
-if [[ $GPG_ENABLED == "true" ]]; then
-     echo "Enable GPG signing in git config"
-     git config --global commit.gpgsign true
-     echo "Using the GPG key ID $GPG_KEY_ID"
-     git config --global user.signingkey $GPG_KEY_ID
-     echo "GPG_KEY_ID = $GPG_KEY_ID"
-     echo "Import the GPG key"
-     echo  "$GPG_KEY" | base64 -d > private.key
-     gpg --import ./private.key
-     rm ./private.key
-else
-  echo "GPG signing is not enabled"
-fi
 echo "Override the java home as gitactions is seting up the JAVA_HOME env variable"
 JAVA_HOME="/usr/java/openjdk-14/"
 # Setup maven local repo
@@ -59,18 +44,12 @@ fi
 echo "Move to folder $MAVEN_PROJECT_FOLDER"
 cd $MAVEN_PROJECT_FOLDER
 
-# prepare release
-echo "Do mvn release:prepare with arguments $MAVEN_ARGS"
-mvn $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL -Dusername=$GITHUB_ACCESS_TOKEN release:prepare -B -Darguments="$MAVEN_ARGS"
+# Create the release and set the version:
+echo "Do mvn release:branch with arguments $MAVEN_RELEASE_ARGS"
+mvn $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL -Dusername=$GITHUB_ACCESS_TOKEN release:branch -B -Darguments="$MAVEN_RELEASE_ARGS"
 
-# do release if prepare did not fail
 if [[ ("$?" -eq 0) && ($SKIP_PERFORM == "false") ]]; then
-     echo "Do mvn release:perform with arguments $MAVEN_ARGS"
-     mvn $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL release:perform -B -Darguments="$MAVEN_ARGS"
-fi
-
-# rollback release if prepare or perform failed
-if [[ "$?" -ne 0 ]] ; then
-     echo "Rolling back release after failure"
-     mvn $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL -Dusername=$GITHUB_ACCESS_TOKEN release:rollback -B -Darguments="$MAVEN_ARGS"
+# Build release
+echo "Do mvn release:branch with arguments $MAVEN_BUILD_RELEASE_ARGS"
+mvn $MAVEN_SETTINGS_OPTION $MAVEN_REPO_LOCAL -Dusername=$GITHUB_ACCESS_TOKEN build-helper:parse-version clean ${testPhase} release:clean release:prepare release:perform -Darguments="$MAVEN_BUILD_RELEASE_ARGS"
 fi

@@ -10,17 +10,6 @@ inputs:
     description: 'Filter the branch to execute the release on'
     required: false
 
-  gpg-enabled: 
-    description: 'Enable gpg signing'
-    required: false
-    default: false
-  gpg-key-id: 
-    description: 'The GPG key ID'
-    required: false
-  gpg-key: 
-    description: 'The GPG key'
-    required: false
-
   maven-local-repo-path: 
     description: 'The maven local repository path'
     required: false
@@ -34,9 +23,13 @@ inputs:
   maven-repo-server-password:
     description: 'Maven server repository password'
     required: true
-  maven-args:
-    description: 'The maven arguments for the release'
-    required: false
+  maven-release-args:
+    description: 'The maven arguments for the release step'
+    required: true
+    default: ''
+  maven-build-release-args:
+    description: 'The maven arguments for the build release step'
+    required: true
     default: ''
   maven-project-folder:
     description: 'You may have more than one maven projects inside the repo. This option allows you to specify the folder for which you want to trigger the release'
@@ -66,16 +59,13 @@ runs:
   env:
     RELEASE_BRANCH_NAME: ${{ inputs.release-branch-name }}
 
-    GPG_ENABLED: ${{ inputs.gpg-enabled }}
-    GPG_KEY_ID: ${{ inputs.gpg-key-id }}
-    GPG_KEY: ${{ inputs.gpg-key }}
-
     MAVEN_LOCAL_REPO_PATH: ${{ inputs.maven-local-repo-path }}
     MAVEN_REPO_SERVER_ID: ${{ inputs.maven-repo-server-id }}
     MAVEN_REPO_SERVER_USERNAME: ${{ inputs.maven-repo-server-username }}
     MAVEN_REPO_SERVER_PASSWORD: ${{ inputs.maven-repo-server-password }}
     MAVEN_PROJECT_FOLDER: ${{ inputs.maven-project-folder }}
-    MAVEN_ARGS: ${{ inputs.maven-args }}
+    MAVEN_RELEASE_ARGS: ${{ inputs.maven-release-args }}
+    $MAVEN_BUILD_RELEASE_ARGS: ${{ inputs.maven-release-build-args }}
 
     SKIP_PERFORM: ${{ inputs.skip-perform }}
 
