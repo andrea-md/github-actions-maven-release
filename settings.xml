@@ -6,7 +6,7 @@
         <server>
             <!-- This id must match the distributionManagement section in pom.xml -->
             <id>${env.MAVEN_REPO_SERVER_ID}</id>
-            <privateKey>${env.MAVEN_REPO_PRIVATE_KEY}</privateKey>
+            <privateKey>/home/runner/.ssh/id_dp_rsa</privateKey>
             <passphrase>${env.MAVEN_REPO_PRIVATE_KEY_PASSPHRASE}</passphrase>
         </server>
     </servers>
